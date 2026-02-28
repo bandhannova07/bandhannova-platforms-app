@@ -3,58 +3,65 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 
-function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
+function Counter({ target, suffix = '' }: { target: number; suffix?: string }) {
     const [count, setCount] = useState(0);
     const ref = useRef(null);
     const inView = useInView(ref, { once: true });
 
     useEffect(() => {
         if (!inView) return;
-        let start = 0;
-        const duration = 2000;
-        const startTime = Date.now();
-
-        const animate = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            // Ease out cubic
-            const eased = 1 - Math.pow(1 - progress, 3);
+        const duration = 2200;
+        const start = Date.now();
+        const tick = () => {
+            const progress = Math.min((Date.now() - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 4); // quartic ease-out
             setCount(Math.floor(eased * target));
-
-            if (progress < 1) requestAnimationFrame(animate);
+            if (progress < 1) requestAnimationFrame(tick);
         };
-        requestAnimationFrame(animate);
+        requestAnimationFrame(tick);
     }, [inView, target]);
 
     return <span ref={ref}>{count}{suffix}</span>;
 }
 
 const stats = [
-    { value: 10, suffix: '+', label: 'Products' },
-    { value: 15, suffix: '+', label: 'AI Models' },
-    { value: 500, suffix: '+', label: 'Users' },
-    { value: 99, suffix: '%', label: 'Uptime' },
+    { value: 10, suffix: '+', label: 'Products Built' },
+    { value: 7, suffix: '+', label: 'AI Models Integrated' },
+    { value: 5000, suffix: '+', label: 'Active Users' },
+    { value: 99, suffix: '%', label: 'Uptime SLA' },
 ];
 
 export default function Stats() {
     return (
-        <section className="stats-section">
-            <div className="stats-inner">
-                {stats.map((stat, i) => (
-                    <motion.div
-                        key={stat.label}
-                        className="stat-item"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: i * 0.1 }}
-                    >
-                        <h3>
-                            <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-                        </h3>
-                        <p>{stat.label}</p>
-                    </motion.div>
-                ))}
+        <section id="stats" className="section-dark" aria-labelledby="stats-title">
+            <div className="section-inner">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7 }}
+                    style={{ textAlign: 'center', marginBottom: '16px' }}
+                >
+                    <span className="section-label" style={{ color: '#60a5fa' }}>📊 By the Numbers</span>
+                    <h2 id="stats-title" className="section-title" style={{ color: '#fff' }}>Growing fast.<br />Built to scale.</h2>
+                </motion.div>
+
+                <div className="stats-grid">
+                    {stats.map((s, i) => (
+                        <motion.div
+                            key={s.label}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: i * 0.1 }}
+                        >
+                            <div className="stat-number" style={{ background: 'linear-gradient(135deg, #60a5fa, #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                                <Counter target={s.value} suffix={s.suffix} />
+                            </div>
+                            <div className="stat-label">{s.label}</div>
+                        </motion.div>
+                    ))}
+                </div>
             </div>
         </section>
     );
