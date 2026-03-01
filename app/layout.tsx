@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     siteName: "BandhanNova Platforms",
-    title: "BandhanNova — The Future of Digital India",
+    title: "BandhanNova Platforms — The Future of Digital India",
     description:
       "Explore BandhanNova's ecosystem of AI-powered products. One account, infinite possibilities. Built for India.",
     url: "https://www.bandhannova.in",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BandhanNova — The Future of Digital India",
+    title: "BandhanNova Platforms — The Future of Digital India",
     description:
       "Explore BandhanNova's ecosystem of AI-powered products. Built for India.",
     images: ["/og-image.png"],
