@@ -11,12 +11,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.bandhannova.in"),
   title: {
-    default: "BandhanNova — The Future of Digital India",
+    default: "BandhanNova Platforms — The Future of Digital India",
     template: "%s | BandhanNova",
   },
   description:
     "BandhanNova is a unified digital platform powering AI assistants, real-time messaging, knowledge search, education, and more — designed and built in India for the world.",
   keywords: [
+    "Bandhan",
+    "Nova AI",
+    "Nova",
     "BandhanNova",
     "BandhanNova Platforms",
     "AI Ecosystem India",
